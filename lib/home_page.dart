@@ -10,6 +10,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffod;
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text(
+          'K-HomeStore',
+          style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        toolbarHeight: 100,
+        automaticallyImplyLeading: false,
+      ),
+    );
   }
 }
