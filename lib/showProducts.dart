@@ -155,7 +155,7 @@ class _CartScreenState extends State<CartScreen> {
         SnackBar(
           content: Text(
             'Products have been purchased. A message notification has been sent to your phone number.',
-            style: TextStyle(fontSize: 23.0, backgroundColor: Colors.blueGrey[200]),
+            style: TextStyle(fontSize: 24.0, backgroundColor: Colors.blueGrey[200]),
           ),
         ),
       );
@@ -188,7 +188,7 @@ class _CartScreenState extends State<CartScreen> {
               itemCount: widget.cartItems.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(widget.cartItems[index].toString()),
+                  title: Text(widget.cartItems[index].toString(),style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.normal)),
                   trailing: IconButton(
                     icon: const Icon(Icons.remove_shopping_cart),
                     onPressed: () {
@@ -206,20 +206,20 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Total: \$${total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            child: Text('Total: \$${total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(30.0),
             child: TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Enter your name'),
+              decoration: const InputDecoration(labelText: 'Enter your name',labelStyle: TextStyle(fontSize: 28),),style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.normal),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(30.0),
             child: TextField(
               controller: _phoneController,
-              decoration: const InputDecoration(labelText: 'Enter your phone number'),
+              decoration: const InputDecoration(labelText: 'Enter your phone number',labelStyle: TextStyle(fontSize: 25),),style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.normal),
               keyboardType: TextInputType.phone,
             ),
           ),
