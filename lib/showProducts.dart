@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'products.dart';
-import 'db.dart'; // Ensure this file contains the necessary methods for saving data
+import 'db.dart';
 
 class ProductsList extends StatefulWidget {
   const ProductsList({super.key});
@@ -118,3 +118,114 @@ class ShowProducts extends StatelessWidget {
     );
   }
 }
+
+class CartScreen extends StatefulWidget {
+  final List<Product> cartItems;
+  const CartScreen({super.key, required this.cartItems});
+
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  bool saveCartItemsToDatabase(List<Product> cartItems, String name, String phone) {
+    print('Saving cart items to the database...');
+    print('Name: $name');
+    print('Phone: $phone');
+    print('Cart Items: ${cartItems.map((item) => item.toString()).join(', ')}');
+    return true;
+  }
+
+  void _saveCart() {
+    final name = _nameController.text.trim();
+    final phone = _phoneController.text.trim();
+
+    if (name.isEmpty || phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill out all fields')),
+      );
+      return;
+    }
+
+    if (saveCartItemsToDatabase(widget.cartItems, name, phone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Products have been purchased. A message notification has been sent to your phone number.',
+            style: TextStyle(fontSize: 23.0, backgroundColor: Colors.blueGrey[200]),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save cart items')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double total = widget.cartItems.fold(0, (sum, item) => sum + item.price);
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue[400],
+        title: const Text('Cart Items'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: _saveCart,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.cartItems.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(widget.cartItems[index].toString()),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.remove_shopping_cart),
+                    onPressed: () {
+                      setState(() {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('${widget.cartItems[index].name} removed from cart')),
+                        );
+                        widget.cartItems.removeAt(index);
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Total: \$${total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Enter your name'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _phoneController,
+              decoration: const InputDecoration(labelText: 'Enter your phone number'),
+              keyboardType: TextInputType.phone,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
