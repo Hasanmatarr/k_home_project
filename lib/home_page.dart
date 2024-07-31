@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'K-HomeStore',
-          style: TextStyle(color: Colors.black87, fontSize: 32, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.blue, fontSize: 32, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
